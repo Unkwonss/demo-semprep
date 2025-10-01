@@ -1,0 +1,38 @@
+rules:
+  - id: js-assignment-in-if
+    languages: [javascript]
+    message: "Có dấu '=' trong điều kiện if — có thể bạn muốn so sánh '==' hoặc '===' thay vì gán."
+    severity: WARNING
+    patterns:
+      - pattern: if ($X = $Y) { $BODY }
+
+  - id: js-off-by-one-for-loop-leq-length
+    languages: [javascript]
+    message: "Vòng lặp dùng '<=' với '.length' có thể gây truy cập index ngoài mảng (off-by-one)."
+    severity: WARNING
+    patterns:
+      - pattern: for (let $I = $INIT; $I <= $ARR.length; $I++) { $BODY }
+
+  - id: js-implicit-global-assignment
+    languages: [javascript]
+    message: "Gán cho biến mà không khai báo (không có let/const/var) — sẽ tạo biến global (xấu)."
+    severity: WARNING
+    patterns:
+      - pattern: $NAME = $EXPR
+
+  - id: js-missing-await-getUserFromDB
+    languages: [javascript]
+    message: "Gọi getUserFromDB(...) mà không dùng await — kết quả sẽ là Promise (quên await)."
+    severity: WARNING
+    patterns:
+      - pattern: const $X = getUserFromDB($ARGS)
+      - pattern: let $X = getUserFromDB($ARGS)
+
+  - id: js-log-password
+    languages: [javascript]
+    message: "Đang log biến tên 'password' ra console — không nên log mật khẩu rõ ràng."
+    severity: WARNING
+    patterns:
+      - pattern: console.log("User password is:", $PWD)
+      - pattern: console.log($ANY, password)
+      - pattern: console.log(password)
